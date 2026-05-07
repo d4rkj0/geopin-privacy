@@ -1,75 +1,368 @@
-<h1>Informativa sulla Privacy - GeoPin</h1>
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Informativa sulla Privacy - GeoPin</title>
 
-<p><strong>Ultimo aggiornamento:</strong> 23 aprile 2026</p>
+  <style>
+    :root {
+      --bg: #eef7f4;
+      --card: #ffffff;
+      --primary: #16a085;
+      --primary-dark: #0f766e;
+      --accent: #2dd4bf;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d9f0eb;
+      --shadow: 0 18px 45px rgba(15, 118, 110, 0.14);
+      --radius: 22px;
+    }
 
-<p>
-GeoPin utilizza la tecnologia di geolocalizzazione del dispositivo per ottenere la posizione attuale dell’utente.
-L’app usa le coordinate geografiche (latitudine e longitudine) per consentire il salvataggio di una posizione e, quando previsto, per ricavare un indirizzo leggibile tramite il servizio di reverse geocoding Nominatim basato su dati OpenStreetMap.
-</p>
+    * {
+      box-sizing: border-box;
+    }
 
-<h2>1. Dati trattati</h2>
-<p>GeoPin può trattare i seguenti dati:</p>
-<ul>
-  <li>dati di posizione del dispositivo, come latitudine e longitudine;</li>
-  <li>indirizzo o informazioni di localizzazione ottenute tramite reverse geocoding a partire dalle coordinate;</li>
-  <li>eventuali dati inseriti manualmente dall’utente, come etichette o note associate a una posizione salvata.</li>
-</ul>
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(45, 212, 191, 0.25), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(22, 160, 133, 0.18), transparent 30%),
+        linear-gradient(135deg, #f4fffc 0%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 24px;
+    }
 
-<h2>2. Finalità del trattamento</h2>
-<p>I dati sono utilizzati esclusivamente per:</p>
-<ul>
-  <li>rilevare la posizione attuale del dispositivo;</li>
-  <li>salvare e mostrare all’utente una posizione scelta;</li>
-  <li>convertire le coordinate geografiche in un indirizzo o in una descrizione comprensibile del luogo tramite Nominatim/OpenStreetMap;</li>
-  <li>migliorare l’esperienza d’uso dell’app nelle funzionalità di localizzazione.</li>
-</ul>
+    .privacy-wrapper {
+      width: 100%;
+      max-width: 960px;
+      margin: 0 auto;
+    }
 
-<h2>3. Come funziona la geolocalizzazione</h2>
-<p>
-GeoPin accede alla posizione del dispositivo solo previa autorizzazione dell’utente.
-Se il permesso non viene concesso, alcune funzionalità basate sulla posizione potrebbero non essere disponibili o funzionare in modo limitato.
-</p>
+    .privacy-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
 
-<h2>4. Reverse geocoding con Nominatim/OpenStreetMap</h2>
-<p>
-Per mostrare un indirizzo associato alle coordinate geografiche, GeoPin può inviare latitudine e longitudine al servizio Nominatim, che utilizza dati OpenStreetMap per restituire un indirizzo o un riferimento geografico leggibile.
-</p>
+    .privacy-header {
+      position: relative;
+      padding: 42px 34px;
+      color: white;
+      background:
+        linear-gradient(135deg, rgba(15, 118, 110, 0.95), rgba(22, 160, 133, 0.92)),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.25), transparent 35%);
+      overflow: hidden;
+    }
 
-<p>
-Il risultato restituito da Nominatim può essere approssimativo, poiché il servizio non calcola necessariamente l’indirizzo esatto del punto indicato, ma individua il più vicino elemento cartografico idoneo presente nei dati OpenStreetMap.
-</p>
+    .privacy-header::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -70px;
+      top: -80px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.13);
+    }
 
-<h2>5. Base giuridica</h2>
-<p>
-Il trattamento dei dati di posizione si basa sul consenso dell’utente, espresso attraverso la concessione del permesso di localizzazione sul dispositivo.
-L’utente può revocare tale permesso in qualsiasi momento dalle impostazioni del sistema operativo.
-</p>
+    .privacy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      font-size: 0.88rem;
+      font-weight: 700;
+      margin-bottom: 16px;
+    }
 
-<h2>6. Conservazione dei dati</h2>
-<p>
-Le posizioni salvate dall’app sono conservate sul dispositivo dell’utente fino a eventuale eliminazione manuale o disinstallazione dell’app, salvo diversa indicazione espressamente comunicata nell’app stessa.
-</p>
+    .privacy-header h1 {
+      position: relative;
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.1rem);
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+      z-index: 1;
+    }
 
-<h2>7. Comunicazione dei dati</h2>
-<p>
-Quando viene utilizzata la funzione di reverse geocoding, le coordinate di posizione necessarie alla richiesta possono essere trasmesse al servizio Nominatim/OpenStreetMap al solo scopo di ottenere l’indirizzo corrispondente o il riferimento geografico più vicino.
-</p>
+    .last-update {
+      position: relative;
+      margin: 14px 0 0;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.98rem;
+      z-index: 1;
+    }
 
-<p>
-GeoPin non utilizza tali dati per finalità pubblicitarie o di profilazione.
-</p>
+    .privacy-content {
+      padding: 34px;
+    }
 
-<h2>8. Diritti dell’utente</h2>
-<p>
-L’utente può in qualsiasi momento:
-</p>
-<ul>
-  <li>negare o revocare il permesso di accesso alla posizione;</li>
-  <li>eliminare le posizioni salvate nell’app;</li>
-  <li>richiedere informazioni sul trattamento dei dati, se applicabile.</li>
-</ul>
+    .intro {
+      padding: 22px;
+      margin-bottom: 28px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(45, 212, 191, 0.12), rgba(22, 160, 133, 0.06));
+      border: 1px solid var(--border);
+      font-size: 1.03rem;
+    }
 
-<h2>9. Modifiche all’informativa</h2>
-<p>
-La presente informativa può essere aggiornata nel tempo. Le eventuali modifiche saranno rese disponibili tramite aggiornamento della presente pagina o tramite l’app.
-</p>
+    .section {
+      padding: 24px 0;
+      border-bottom: 1px solid #edf5f3;
+    }
+
+    .section:last-child {
+      border-bottom: none;
+    }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 14px;
+      color: var(--primary-dark);
+      font-size: 1.35rem;
+      line-height: 1.3;
+    }
+
+    h2 .number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      font-size: 0.95rem;
+      box-shadow: 0 8px 18px rgba(22, 160, 133, 0.22);
+    }
+
+    p {
+      margin: 0 0 14px;
+      color: #374151;
+    }
+
+    ul {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    li {
+      position: relative;
+      padding: 13px 15px 13px 44px;
+      border-radius: 14px;
+      background: #f8fffd;
+      border: 1px solid #e3f5f1;
+      color: #374151;
+    }
+
+    li::before {
+      content: "✓";
+      position: absolute;
+      left: 15px;
+      top: 12px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(22, 160, 133, 0.12);
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+
+    strong {
+      color: var(--primary-dark);
+    }
+
+    .note-box {
+      margin-top: 16px;
+      padding: 16px 18px;
+      border-left: 5px solid var(--primary);
+      background: #f0fffb;
+      border-radius: 14px;
+      color: #31524c;
+    }
+
+    .privacy-footer {
+      padding: 22px 34px;
+      background: #f8fffd;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      body {
+        padding: 14px;
+      }
+
+      .privacy-header {
+        padding: 34px 22px;
+      }
+
+      .privacy-content {
+        padding: 22px;
+      }
+
+      .intro {
+        padding: 18px;
+      }
+
+      h2 {
+        align-items: flex-start;
+        font-size: 1.18rem;
+      }
+
+      li {
+        padding-right: 12px;
+      }
+
+      .privacy-footer {
+        padding: 20px 22px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="privacy-wrapper">
+    <article class="privacy-card">
+
+      <header class="privacy-header">
+        <div class="privacy-badge">📍 GeoPin Privacy</div>
+        <h1>Informativa sulla Privacy</h1>
+        <p class="last-update">
+          <strong>Ultimo aggiornamento:</strong> 23 aprile 2026
+        </p>
+      </header>
+
+      <div class="privacy-content">
+
+        <section class="intro">
+          <p>
+            GeoPin utilizza la tecnologia di geolocalizzazione del dispositivo per ottenere la posizione attuale dell’utente.
+            L’app usa le coordinate geografiche, come latitudine e longitudine, per consentire il salvataggio di una posizione e,
+            quando previsto, per ricavare un indirizzo leggibile tramite il servizio di reverse geocoding Nominatim basato su dati OpenStreetMap.
+          </p>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">1</span> Dati trattati</h2>
+          <p>GeoPin può trattare i seguenti dati:</p>
+          <ul>
+            <li>dati di posizione del dispositivo, come latitudine e longitudine;</li>
+            <li>indirizzo o informazioni di localizzazione ottenute tramite reverse geocoding a partire dalle coordinate;</li>
+            <li>eventuali dati inseriti manualmente dall’utente, come etichette o note associate a una posizione salvata.</li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">2</span> Finalità del trattamento</h2>
+          <p>I dati sono utilizzati esclusivamente per:</p>
+          <ul>
+            <li>rilevare la posizione attuale del dispositivo;</li>
+            <li>salvare e mostrare all’utente una posizione scelta;</li>
+            <li>convertire le coordinate geografiche in un indirizzo o in una descrizione comprensibile del luogo tramite Nominatim/OpenStreetMap;</li>
+            <li>migliorare l’esperienza d’uso dell’app nelle funzionalità di localizzazione.</li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">3</span> Come funziona la geolocalizzazione</h2>
+          <p>
+            GeoPin accede alla posizione del dispositivo solo previa autorizzazione dell’utente.
+            Se il permesso non viene concesso, alcune funzionalità basate sulla posizione potrebbero non essere disponibili o funzionare in modo limitato.
+          </p>
+        </section>
+
+        <section class="section">
+  <h2><span class="number">4</span> Reverse geocoding con Nominatim/OpenStreetMap</h2>
+
+  <p>
+    Per mostrare un indirizzo associato alle coordinate geografiche, GeoPin può inviare latitudine e longitudine al servizio Nominatim,
+    che utilizza dati OpenStreetMap per restituire un indirizzo o un riferimento geografico leggibile.
+  </p>
+
+  <div class="note-box">
+    Le informazioni restituite da Nominatim/OpenStreetMap possono non essere sempre precise, complete o aggiornate.
+    In alcuni casi l’indirizzo, il comune, la via, il numero civico, il CAP o altri dettagli geografici potrebbero risultare approssimativi,
+    mancanti o non corrispondere esattamente alla posizione rilevata.
+    GeoPin mostra tali informazioni così come vengono restituite dal servizio esterno e non può garantirne l’assoluta accuratezza.
+  </div>
+</section>
+
+        <section class="section">
+          <h2><span class="number">5</span> Base giuridica</h2>
+          <p>
+            Il trattamento dei dati di posizione si basa sul consenso dell’utente, espresso attraverso la concessione del permesso di localizzazione sul dispositivo.
+            L’utente può revocare tale permesso in qualsiasi momento dalle impostazioni del sistema operativo.
+          </p>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">6</span> Conservazione dei dati</h2>
+          <p>
+            Le posizioni salvate dall’app sono conservate sul dispositivo dell’utente fino a eventuale eliminazione manuale o disinstallazione dell’app,
+            salvo diversa indicazione espressamente comunicata nell’app stessa.
+          </p>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">7</span> Comunicazione dei dati</h2>
+          <p>
+            Quando viene utilizzata la funzione di reverse geocoding, le coordinate di posizione necessarie alla richiesta possono essere trasmesse al servizio
+            Nominatim/OpenStreetMap al solo scopo di ottenere l’indirizzo corrispondente o il riferimento geografico più vicino.
+          </p>
+
+          <div class="note-box">
+            GeoPin non utilizza tali dati per finalità pubblicitarie o di profilazione.
+          </div>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">8</span> Diritti dell’utente</h2>
+          <p>L’utente può in qualsiasi momento:</p>
+          <ul>
+            <li>negare o revocare il permesso di accesso alla posizione;</li>
+            <li>eliminare le posizioni salvate nell’app;</li>
+            <li>richiedere informazioni sul trattamento dei dati, se applicabile.</li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">9</span> Modifiche all’informativa</h2>
+          <p>
+            La presente informativa può essere aggiornata nel tempo.
+            Le eventuali modifiche saranno rese disponibili tramite aggiornamento della presente pagina o tramite l’app.
+          </p>
+        </section>
+
+      </div>
+
+      <footer class="privacy-footer">
+        © 2026 GeoPin - Informativa sulla Privacy
+      </footer>
+
+    </article>
+  </main>
+
+</body>
+</html>
