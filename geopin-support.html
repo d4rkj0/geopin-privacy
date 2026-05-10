@@ -1,0 +1,764 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <title>GeoPin JSON Generator</title>
+  <style>
+    :root {
+      --bg: #eef7f4;
+      --card: #ffffff;
+      --primary: #16a085;
+      --primary-dark: #0f766e;
+      --accent: #2dd4bf;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d9f0eb;
+      --danger: #dc2626;
+      --warning: #b45309;
+      --ok: #059669;
+      --shadow: 0 18px 45px rgba(15, 118, 110, 0.14);
+      --radius: 22px;
+    }
+
+    * {
+      box-sizing: border-box;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    html,
+    body {
+      width: 100%;
+      min-height: 100%;
+      overflow-x: hidden;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(45, 212, 191, 0.35), transparent 34%),
+        radial-gradient(circle at bottom right, rgba(22, 160, 133, 0.22), transparent 36%),
+        var(--bg);
+      padding: 18px;
+    }
+
+    .app {
+      width: 100%;
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    .hero {
+      padding: 22px 6px 18px;
+      text-align: center;
+    }
+
+    .logo {
+      width: 74px;
+      height: 74px;
+      margin: 0 auto 12px;
+      border-radius: 24px;
+      display: grid;
+      place-items: center;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      box-shadow: 0 16px 34px rgba(15, 118, 110, 0.26);
+      font-size: 38px;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: clamp(1.7rem, 6vw, 2.5rem);
+      line-height: 1.05;
+      color: var(--primary-dark);
+    }
+
+    .subtitle {
+      margin: 10px auto 0;
+      max-width: 600px;
+      color: var(--muted);
+      font-size: 0.98rem;
+      line-height: 1.45;
+    }
+
+    .card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding: 18px;
+      backdrop-filter: blur(10px);
+    }
+
+    label {
+      display: block;
+      font-weight: 700;
+      margin-bottom: 8px;
+      color: var(--primary-dark);
+    }
+
+    input, select, textarea {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 15px;
+      font-size: 1rem;
+      color: var(--text);
+      background: #fff;
+      outline: none;
+    }
+
+    textarea {
+      min-height: 270px;
+      resize: vertical;
+      font-family: Consolas, Monaco, monospace;
+      font-size: 0.9rem;
+      line-height: 1.45;
+      white-space: pre;
+      overflow: auto;
+    }
+
+    input:focus, select:focus, textarea:focus {
+      border-color: var(--primary);
+      box-shadow: 0 0 0 4px rgba(22, 160, 133, 0.12);
+    }
+
+    .hint {
+      margin: 8px 0 0;
+      color: var(--muted);
+      font-size: 0.84rem;
+      line-height: 1.35;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 13px;
+    }
+
+    @media (min-width: 680px) {
+      .grid.two {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .actions {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    @media (min-width: 560px) {
+      .actions {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    button {
+      border: 0;
+      border-radius: 16px;
+      padding: 14px 16px;
+      font-size: 1rem;
+      font-weight: 800;
+      cursor: pointer;
+      color: #fff;
+      background: linear-gradient(135deg, var(--primary-dark), var(--primary));
+      box-shadow: 0 12px 24px rgba(15, 118, 110, 0.22);
+    }
+
+    button.secondary {
+      color: var(--primary-dark);
+      background: #eafff9;
+      border: 1px solid var(--border);
+      box-shadow: none;
+    }
+
+    button.warning {
+      color: #fff;
+      background: linear-gradient(135deg, #92400e, #f59e0b);
+      box-shadow: 0 12px 24px rgba(180, 83, 9, 0.18);
+    }
+
+    button:disabled {
+      opacity: 0.55;
+      cursor: not-allowed;
+    }
+
+    .result-list {
+      display: grid;
+      gap: 10px;
+      margin-top: 14px;
+    }
+
+    .place {
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 13px;
+      background: #fbfffd;
+      cursor: pointer;
+      transition: transform 0.15s ease, border-color 0.15s ease;
+    }
+
+    .place:active {
+      transform: scale(0.99);
+    }
+
+    .place strong {
+      display: block;
+      color: var(--primary-dark);
+      margin-bottom: 5px;
+    }
+
+    .place small {
+      display: block;
+      color: var(--muted);
+      line-height: 1.35;
+      overflow-wrap: anywhere;
+    }
+
+    .message {
+      margin-top: 12px;
+      padding: 12px 14px;
+      border-radius: 15px;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      display: none;
+    }
+
+    .message.show {
+      display: block;
+    }
+
+    .message.ok {
+      background: #ecfdf5;
+      color: var(--ok);
+      border: 1px solid #a7f3d0;
+    }
+
+    .message.err {
+      background: #fef2f2;
+      color: var(--danger);
+      border: 1px solid #fecaca;
+    }
+
+    .message.warn {
+      background: #fffbeb;
+      color: var(--warning);
+      border: 1px solid #fde68a;
+    }
+
+    .section-title {
+      margin: 18px 0 9px;
+      color: var(--primary-dark);
+      font-size: 1.05rem;
+    }
+
+    .footer {
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.78rem;
+      line-height: 1.4;
+      padding: 18px 8px 8px;
+    }
+
+    .footer a {
+      color: var(--primary-dark);
+      font-weight: 700;
+    }
+
+    .examples {
+      margin-top: 10px;
+      display: grid;
+      gap: 6px;
+    }
+
+    .example {
+      border: 1px dashed var(--border);
+      background: #f8fffc;
+      color: var(--muted);
+      border-radius: 13px;
+      padding: 9px 10px;
+      font-size: 0.82rem;
+      overflow-wrap: anywhere;
+    }
+  </style>
+</head>
+<body>
+  <main class="app">
+    <section class="hero">
+      <div class="logo">📍</div>
+      <h1>GeoPin JSON Generator</h1>
+      <p class="subtitle">
+        Inserisci un indirizzo, coordinate o un link Google Maps completo. Scegli nome e icona, poi genera il JSON compatibile con GeoPin.
+      </p>
+    </section>
+
+    <section class="card">
+      <div class="grid">
+        <div>
+          <label for="addressInput">Indirizzo, coordinate o link Maps</label>
+          <input id="addressInput" type="text" placeholder="Es. Via del Corso, Roma oppure 41.9028, 12.4964" autocomplete="street-address" />
+          <p class="hint">
+            Accetta indirizzi testuali, coordinate, link con <strong>@lat,lng</strong>, link con <strong>q=lat,lng</strong> e link con <strong>!3dlat!4dlng</strong>.
+          </p>
+          <div class="examples">
+            <div class="example">41.7894739, 12.3264044</div>
+            <div class="example">https://www.google.com/maps?q=41.7894739,12.3264044</div>
+            <div class="example">https://www.google.com/maps/place/.../@41.7894739,12.3264044,17z</div>
+          </div>
+        </div>
+
+        <div class="grid two">
+          <div>
+            <label for="pinName">Nome pin</label>
+            <input id="pinName" type="text" placeholder="Es. Dragona" />
+          </div>
+
+          <div>
+            <label for="emoji">Icona</label>
+            <select id="emoji">
+              <option value="📍">📍 Posizione</option>
+              <option value="🏠">🏠 Casa</option>
+              <option value="🏢">🏢 Ufficio</option>
+              <option value="🏪">🏪 Negozio</option>
+              <option value="🏫">🏫 Scuola</option>
+              <option value="🏥">🏥 Ospedale</option>
+              <option value="⛪">⛪ Chiesa</option>
+              <option value="🏖️">🏖️ Spiaggia</option>
+              <option value="🌲">🌲 Natura</option>
+              <option value="🏔️">🏔️ Montagna</option>
+              <option value="🚗">🚗 Auto</option>
+              <option value="🅿️">🅿️ Parcheggio</option>
+              <option value="🚉">🚉 Stazione</option>
+              <option value="🚌">🚌 Fermata</option>
+              <option value="⛽">⛽ Benzina</option>
+              <option value="🛒">🛒 Spesa</option>
+              <option value="☕">☕ Bar</option>
+              <option value="🍕">🍕 Cibo</option>
+              <option value="⭐">⭐ Preferito</option>
+              <option value="❤️">❤️ Importante</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="actions">
+        <button id="searchBtn">Cerca / genera</button>
+        <button id="clearBtn" class="secondary">Pulisci</button>
+      </div>
+
+      <div id="shortLinkActions" class="actions" style="display:none;">
+        <button id="openShortLinkBtn" class="warning">Apri link corto</button>
+        <button id="copyHelpBtn" class="secondary">Copia istruzioni</button>
+      </div>
+
+      <div id="message" class="message"></div>
+
+      <h2 class="section-title">Risultati indirizzo</h2>
+      <div id="results" class="result-list"></div>
+
+      <h2 class="section-title">JSON GeoPin</h2>
+      <textarea id="jsonOutput" readonly placeholder="Il JSON comparirà qui dopo aver scelto un risultato o dopo aver incollato coordinate/link Maps leggibile..."></textarea>
+
+      <div class="actions">
+        <button id="copyBtn" disabled>Copia JSON</button>
+        <button id="downloadBtn" class="secondary" disabled>Scarica file .json</button>
+      </div>
+    </section>
+
+    <p class="footer">
+      Dati geografici da <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a>.
+      Geocoding tramite Nominatim. Usa questo strumento per ricerche occasionali, evitando richieste massive.
+    </p>
+  </main>
+
+  <script>
+    const addressInput = document.getElementById('addressInput');
+    const pinName = document.getElementById('pinName');
+    const emoji = document.getElementById('emoji');
+    const searchBtn = document.getElementById('searchBtn');
+    const clearBtn = document.getElementById('clearBtn');
+    const copyBtn = document.getElementById('copyBtn');
+    const downloadBtn = document.getElementById('downloadBtn');
+    const results = document.getElementById('results');
+    const jsonOutput = document.getElementById('jsonOutput');
+    const message = document.getElementById('message');
+    const shortLinkActions = document.getElementById('shortLinkActions');
+    const openShortLinkBtn = document.getElementById('openShortLinkBtn');
+    const copyHelpBtn = document.getElementById('copyHelpBtn');
+
+    let currentJson = null;
+    let lastShortLink = '';
+
+    function showMessage(text, type = 'ok') {
+      message.textContent = text;
+      message.className = `message show ${type}`;
+    }
+
+    function hideMessage() {
+      message.className = 'message';
+      message.textContent = '';
+    }
+
+    function showShortLinkActions(url) {
+      lastShortLink = url;
+      shortLinkActions.style.display = 'grid';
+    }
+
+    function hideShortLinkActions() {
+      lastShortLink = '';
+      shortLinkActions.style.display = 'none';
+    }
+
+    function formatDateItalian(date = new Date()) {
+      return date.toLocaleString('it-IT', {
+        day: '2-digit',
+        month: '2-digit',
+        year: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit',
+        second: '2-digit'
+      });
+    }
+
+    function isShortGoogleMapsLink(text) {
+      return /https?:\/\/(maps\.app\.goo\.gl|goo\.gl\/maps)\//i.test(text.trim());
+    }
+
+    function normalizeNumber(value) {
+      return Number(String(value).replace(',', '.'));
+    }
+
+    function validLatLng(lat, lng) {
+      return Number.isFinite(lat) &&
+        Number.isFinite(lng) &&
+        lat >= -90 &&
+        lat <= 90 &&
+        lng >= -180 &&
+        lng <= 180;
+    }
+
+    function extractCoordinatesFromText(text) {
+      const input = text.trim();
+
+      // Formato Google Maps: /@41.7894739,12.3264044,17z
+      const atMatch = input.match(/@(-?\d+(?:\.\d+)?),\s*(-?\d+(?:\.\d+)?)/);
+      if (atMatch) {
+        const lat = normalizeNumber(atMatch[1]);
+        const lng = normalizeNumber(atMatch[2]);
+        if (validLatLng(lat, lng)) return { lat, lng, source: '@lat,lng' };
+      }
+
+      // Formato Google Maps data: !3d41.7894739!4d12.3264044
+      const dataMatch = input.match(/!3d(-?\d+(?:\.\d+)?)!4d(-?\d+(?:\.\d+)?)/);
+      if (dataMatch) {
+        const lat = normalizeNumber(dataMatch[1]);
+        const lng = normalizeNumber(dataMatch[2]);
+        if (validLatLng(lat, lng)) return { lat, lng, source: '!3d!4d' };
+      }
+
+      // Formato URL query: ?q=41.7894739,12.3264044 oppure ?ll=...
+      try {
+        const url = new URL(input);
+        const paramsToCheck = ['q', 'll', 'query', 'center'];
+
+        for (const paramName of paramsToCheck) {
+          const paramValue = url.searchParams.get(paramName);
+          if (!paramValue) continue;
+
+          const paramMatch = paramValue.match(/(-?\d+(?:\.\d+)?)[,\s]+(-?\d+(?:\.\d+)?)/);
+          if (paramMatch) {
+            const lat = normalizeNumber(paramMatch[1]);
+            const lng = normalizeNumber(paramMatch[2]);
+            if (validLatLng(lat, lng)) return { lat, lng, source: paramName };
+          }
+        }
+      } catch (error) {
+        // Non era un URL valido: va benissimo, forse è un indirizzo o coordinate pure.
+      }
+
+      // Coordinate pure o presenti in mezzo al testo.
+      const plainMatch = input.match(/(-?\d+(?:\.\d+)?)[,\s]+(-?\d+(?:\.\d+)?)/);
+      if (plainMatch) {
+        const lat = normalizeNumber(plainMatch[1]);
+        const lng = normalizeNumber(plainMatch[2]);
+        if (validLatLng(lat, lng)) return { lat, lng, source: 'coordinate' };
+      }
+
+      return null;
+    }
+
+    function buildGeoPinExport({ lat, lng, address }) {
+      const singlePin = {
+        id: Date.now(),
+        name: pinName.value.trim() || addressInput.value.trim() || 'Nuovo pin',
+        emoji: emoji.value || '📍',
+        lat: Number(lat),
+        lng: Number(lng),
+        accuracy: null,
+        time: formatDateItalian(),
+        address: address || ''
+      };
+
+      return {
+        type: 'geopin-pins',
+        version: 1,
+        exportedAt: new Date().toISOString(),
+        pins: [singlePin]
+      };
+    }
+
+    function renderJson(data) {
+      currentJson = data;
+      jsonOutput.value = JSON.stringify(data, null, 2);
+      copyBtn.disabled = false;
+      downloadBtn.disabled = false;
+    }
+
+    async function reverseGeocode(lat, lng) {
+      const url = new URL('https://nominatim.openstreetmap.org/reverse');
+      url.searchParams.set('format', 'jsonv2');
+      url.searchParams.set('lat', String(lat));
+      url.searchParams.set('lon', String(lng));
+      url.searchParams.set('accept-language', 'it');
+
+      const response = await fetch(url.toString(), {
+        headers: {
+          'Accept': 'application/json'
+        }
+      });
+
+      if (!response.ok) {
+        throw new Error('Coordinate trovate, ma non riesco a ricavare l’indirizzo.');
+      }
+
+      const data = await response.json();
+      return data.display_name || '';
+    }
+
+    async function generateFromCoordinates(coords) {
+      searchBtn.disabled = true;
+      searchBtn.textContent = 'Creo JSON...';
+
+      try {
+        let readableAddress = '';
+
+        try {
+          readableAddress = await reverseGeocode(coords.lat, coords.lng);
+        } catch (reverseError) {
+          readableAddress = '';
+        }
+
+        const generated = buildGeoPinExport({
+          lat: coords.lat,
+          lng: coords.lng,
+          address: readableAddress
+        });
+
+        renderJson(generated);
+
+        const sourceLabel = coords.source ? ` (${coords.source})` : '';
+        if (readableAddress) {
+          showMessage(`Coordinate riconosciute${sourceLabel}. Indirizzo ricavato e JSON generato.`, 'ok');
+        } else {
+          showMessage(`Coordinate riconosciute${sourceLabel}. JSON generato senza indirizzo leggibile.`, 'warn');
+        }
+      } finally {
+        searchBtn.disabled = false;
+        searchBtn.textContent = 'Cerca / genera';
+      }
+    }
+
+    async function searchAddress() {
+      hideMessage();
+      hideShortLinkActions();
+      results.innerHTML = '';
+      jsonOutput.value = '';
+      copyBtn.disabled = true;
+      downloadBtn.disabled = true;
+      currentJson = null;
+
+      const query = addressInput.value.trim();
+
+      if (!query) {
+        showMessage('Inserisci un indirizzo, coordinate o un link Google Maps.', 'err');
+        return;
+      }
+
+      if (isShortGoogleMapsLink(query)) {
+        showShortLinkActions(query);
+        showMessage(
+          'Hai incollato un link corto di Google Maps. Una pagina web senza server non può espanderlo in automatico in modo affidabile. Aprilo, copia l’URL completo dalla barra del browser se contiene coordinate, poi incollalo qui.',
+          'warn'
+        );
+        return;
+      }
+
+      const coords = extractCoordinatesFromText(query);
+      if (coords) {
+        await generateFromCoordinates(coords);
+        return;
+      }
+
+      searchBtn.disabled = true;
+      searchBtn.textContent = 'Ricerca in corso...';
+
+      try {
+        const url = new URL('https://nominatim.openstreetmap.org/search');
+        url.searchParams.set('format', 'jsonv2');
+        url.searchParams.set('q', query);
+        url.searchParams.set('limit', '5');
+        url.searchParams.set('addressdetails', '1');
+        url.searchParams.set('accept-language', 'it');
+
+        const response = await fetch(url.toString(), {
+          headers: {
+            'Accept': 'application/json'
+          }
+        });
+
+        if (!response.ok) {
+          throw new Error('Errore nella ricerca. Codice HTTP: ' + response.status);
+        }
+
+        const data = await response.json();
+
+        if (!Array.isArray(data) || data.length === 0) {
+          showMessage('Nessun risultato trovato. Prova con un indirizzo più completo.', 'err');
+          return;
+        }
+
+        showMessage('Scegli il risultato corretto per generare il JSON.', 'ok');
+
+        data.forEach((place, index) => {
+          const div = document.createElement('div');
+          div.className = 'place';
+
+          const title = document.createElement('strong');
+          title.textContent = `Risultato ${index + 1}`;
+
+          const desc = document.createElement('small');
+          desc.textContent = place.display_name;
+
+          const coordsLine = document.createElement('small');
+          coordsLine.textContent = `Coordinate: ${place.lat}, ${place.lon}`;
+
+          div.appendChild(title);
+          div.appendChild(desc);
+          div.appendChild(coordsLine);
+
+          div.addEventListener('click', () => {
+            const generated = buildGeoPinExport({
+              lat: Number(place.lat),
+              lng: Number(place.lon),
+              address: place.display_name || ''
+            });
+
+            renderJson(generated);
+            showMessage('JSON generato. Ora puoi copiarlo o scaricarlo.', 'ok');
+          });
+
+          results.appendChild(div);
+        });
+
+      } catch (error) {
+        showMessage(error.message || 'Errore imprevisto durante la ricerca.', 'err');
+      } finally {
+        searchBtn.disabled = false;
+        searchBtn.textContent = 'Cerca / genera';
+      }
+    }
+
+    async function copyJson() {
+      if (!jsonOutput.value) return;
+
+      try {
+        await navigator.clipboard.writeText(jsonOutput.value);
+        showMessage('JSON copiato negli appunti.', 'ok');
+      } catch (error) {
+        jsonOutput.focus();
+        jsonOutput.select();
+        showMessage('Non riesco a copiare automaticamente. Seleziona il testo e copialo manualmente.', 'err');
+      }
+    }
+
+    async function copyShortLinkHelp() {
+      const help = [
+        '1. Apri il link corto di Google Maps.',
+        '2. Se il browser mostra un URL completo con coordinate, copialo dalla barra degli indirizzi.',
+        '3. Incolla qui l’URL completo.',
+        '4. In alternativa, da Maps copia direttamente le coordinate del punto.'
+      ].join('\n');
+
+      try {
+        await navigator.clipboard.writeText(help);
+        showMessage('Istruzioni copiate negli appunti.', 'ok');
+      } catch (error) {
+        showMessage(help, 'warn');
+      }
+    }
+
+    function downloadJson() {
+      if (!currentJson) return;
+
+      const name = currentJson.pins?.[0]?.name || 'geopin';
+      const safeName = name
+        .toLowerCase()
+        .replace(/[^a-z0-9àèéìòù_-]+/gi, '-')
+        .replace(/-+/g, '-')
+        .replace(/^-|-$/g, '') || 'geopin';
+
+      const blob = new Blob([JSON.stringify(currentJson, null, 2)], {
+        type: 'application/json'
+      });
+
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `${safeName}-geopin.json`;
+      document.body.appendChild(a);
+      a.click();
+      a.remove();
+      URL.revokeObjectURL(url);
+
+      showMessage('File JSON scaricato.', 'ok');
+    }
+
+    function clearAll() {
+      addressInput.value = '';
+      pinName.value = '';
+      emoji.value = '📍';
+      results.innerHTML = '';
+      jsonOutput.value = '';
+      copyBtn.disabled = true;
+      downloadBtn.disabled = true;
+      currentJson = null;
+      hideMessage();
+      hideShortLinkActions();
+      addressInput.focus();
+    }
+
+    searchBtn.addEventListener('click', searchAddress);
+    clearBtn.addEventListener('click', clearAll);
+    copyBtn.addEventListener('click', copyJson);
+    downloadBtn.addEventListener('click', downloadJson);
+
+    openShortLinkBtn.addEventListener('click', () => {
+      if (lastShortLink) {
+        window.open(lastShortLink, '_blank', 'noopener,noreferrer');
+      }
+    });
+
+    copyHelpBtn.addEventListener('click', copyShortLinkHelp);
+
+    addressInput.addEventListener('keydown', (event) => {
+      if (event.key === 'Enter') {
+        searchAddress();
+      }
+    });
+  </script>
+</body>
+</html>
