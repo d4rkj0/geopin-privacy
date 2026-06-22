@@ -1,0 +1,360 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Privacy Policy - GeoPin</title>
+
+  <style>
+    :root {
+      --bg: #eef7f4;
+      --card: #ffffff;
+      --primary: #16a085;
+      --primary-dark: #0f766e;
+      --accent: #2dd4bf;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d9f0eb;
+      --shadow: 0 18px 45px rgba(15, 118, 110, 0.14);
+      --radius: 22px;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      font-family: Arial, Helvetica, sans-serif;
+      background:
+        radial-gradient(circle at top left, rgba(45, 212, 191, 0.25), transparent 35%),
+        radial-gradient(circle at bottom right, rgba(22, 160, 133, 0.18), transparent 30%),
+        linear-gradient(135deg, #f4fffc 0%, var(--bg) 100%);
+      color: var(--text);
+      line-height: 1.7;
+      padding: 24px;
+    }
+
+    .privacy-wrapper { width: 100%; max-width: 960px; margin: 0 auto; }
+
+    .privacy-card {
+      background: rgba(255, 255, 255, 0.92);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      backdrop-filter: blur(12px);
+    }
+
+    .privacy-header {
+      position: relative;
+      padding: 42px 34px;
+      color: white;
+      background:
+        linear-gradient(135deg, rgba(15, 118, 110, 0.95), rgba(22, 160, 133, 0.92)),
+        radial-gradient(circle at top right, rgba(255, 255, 255, 0.25), transparent 35%);
+      overflow: hidden;
+    }
+
+    .privacy-header::after {
+      content: "";
+      position: absolute;
+      width: 220px;
+      height: 220px;
+      right: -70px;
+      top: -80px;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.13);
+    }
+
+    .privacy-topbar {
+      position: relative;
+      z-index: 2;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      margin-bottom: 16px;
+      flex-wrap: wrap;
+    }
+
+    .privacy-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 7px 13px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.18);
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      font-size: 0.88rem;
+      font-weight: 700;
+    }
+
+    .language-switch {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 54px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      background: rgba(255, 255, 255, 0.94);
+      color: var(--primary-dark);
+      text-decoration: none;
+      font-size: 0.9rem;
+      font-weight: 800;
+      border: 1px solid rgba(255, 255, 255, 0.38);
+      box-shadow: 0 8px 18px rgba(0, 0, 0, 0.12);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .language-switch:hover,
+    .language-switch:focus {
+      transform: translateY(-1px);
+      background: #ffffff;
+      box-shadow: 0 10px 22px rgba(0, 0, 0, 0.16);
+      outline: none;
+    }
+
+    .privacy-header h1 {
+      position: relative;
+      margin: 0;
+      font-size: clamp(2rem, 5vw, 3.1rem);
+      line-height: 1.15;
+      letter-spacing: -0.04em;
+      z-index: 1;
+    }
+
+    .last-update {
+      position: relative;
+      margin: 14px 0 0;
+      color: rgba(255, 255, 255, 0.85);
+      font-size: 0.98rem;
+      z-index: 1;
+    }
+
+    .last-update strong { color: #ffffff; }
+    .privacy-content { padding: 34px; }
+
+    .intro {
+      padding: 22px;
+      margin-bottom: 28px;
+      border-radius: 18px;
+      background: linear-gradient(135deg, rgba(45, 212, 191, 0.12), rgba(22, 160, 133, 0.06));
+      border: 1px solid var(--border);
+      font-size: 1.03rem;
+    }
+
+    .intro p:last-child { margin-bottom: 0; }
+
+    .section {
+      padding: 24px 0;
+      border-bottom: 1px solid #edf5f3;
+    }
+
+    .section:last-child { border-bottom: none; }
+
+    h2 {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin: 0 0 14px;
+      color: var(--primary-dark);
+      font-size: 1.35rem;
+      line-height: 1.3;
+    }
+
+    h2 .number {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 34px;
+      height: 34px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--primary), var(--accent));
+      color: white;
+      font-size: 0.95rem;
+      box-shadow: 0 8px 18px rgba(22, 160, 133, 0.22);
+      flex-shrink: 0;
+    }
+
+    p { margin: 0 0 14px; color: #374151; }
+
+    ul {
+      margin: 14px 0 0;
+      padding: 0;
+      list-style: none;
+      display: grid;
+      gap: 10px;
+    }
+
+    li {
+      position: relative;
+      padding: 13px 15px 13px 44px;
+      border-radius: 14px;
+      background: #f8fffd;
+      border: 1px solid #e3f5f1;
+      color: #374151;
+    }
+
+    li::before {
+      content: "✓";
+      position: absolute;
+      left: 15px;
+      top: 12px;
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: rgba(22, 160, 133, 0.12);
+      color: var(--primary-dark);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 0.82rem;
+    }
+
+    strong { color: var(--primary-dark); }
+
+    .note-box {
+      margin-top: 16px;
+      padding: 16px 18px;
+      border-left: 5px solid var(--primary);
+      background: #f0fffb;
+      border-radius: 14px;
+      color: #31524c;
+    }
+
+    .note-box p:last-child { margin-bottom: 0; }
+
+    .privacy-footer {
+      padding: 22px 34px;
+      background: #f8fffd;
+      border-top: 1px solid var(--border);
+      color: var(--muted);
+      font-size: 0.92rem;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      body { padding: 14px; }
+      .privacy-header { padding: 34px 22px; }
+      .privacy-topbar { align-items: flex-start; }
+      .privacy-content { padding: 22px; }
+      .intro { padding: 18px; }
+      h2 { align-items: flex-start; font-size: 1.18rem; }
+      li { padding-right: 12px; }
+      .privacy-footer { padding: 20px 22px; }
+    }
+  </style>
+</head>
+<body>
+  <main class="privacy-wrapper">
+    <article class="privacy-card">
+      <header class="privacy-header">
+        <div class="privacy-topbar">
+          <div class="privacy-badge">📍 GeoPin Privacy</div>
+          <a class="language-switch" href="geopin_privacy_policy_it.html" hreflang="it" lang="it" aria-label="Leggi questa informativa sulla privacy in italiano">IT</a>
+        </div>
+        <h1>Privacy Policy</h1>
+        <p class="last-update"><strong>Last updated:</strong> June 22, 2026</p>
+      </header>
+
+      <div class="privacy-content">
+        <section class="intro">
+          <p>GeoPin uses the device’s geolocation technology to obtain the user’s current position. The app uses geographic coordinates, such as latitude and longitude, to allow users to save a location and, where applicable, to obtain a readable address through the Nominatim reverse geocoding service based on OpenStreetMap data.</p>
+          <p>GeoPin may also display the current position and saved pins on an interactive map based on OpenStreetMap, shown inside the app through the Leaflet library.</p>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">1</span> Data processed</h2>
+          <p>GeoPin may process the following data:</p>
+          <ul>
+            <li>device location data, such as latitude and longitude;</li>
+            <li>address or location information obtained through reverse geocoding from the coordinates;</li>
+            <li>any data entered manually by the user, such as labels or notes associated with a saved location;</li>
+            <li>technical data needed to display the map, such as loading map tiles through OpenStreetMap or compatible map services.</li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">2</span> Purposes of processing</h2>
+          <p>The data is used exclusively to:</p>
+          <ul>
+            <li>detect the current position of the device;</li>
+            <li>save and show a location selected by the user;</li>
+            <li>display the current position and saved pins on an interactive OpenStreetMap-based map through Leaflet;</li>
+            <li>convert geographic coordinates into an address or readable location description through Nominatim/OpenStreetMap;</li>
+            <li>improve the user experience within the app’s location features.</li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">3</span> How geolocation works</h2>
+          <p>GeoPin accesses the device location only after the user has granted permission. If permission is not granted, some location-based features may be unavailable or work in a limited way.</p>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">4</span> Map display with OpenStreetMap and Leaflet</h2>
+          <p>GeoPin may display the user’s current position and saved pins on an interactive map based on OpenStreetMap, integrated into the app through the Leaflet library.</p>
+          <p>When the map is displayed, the device may download map tiles from OpenStreetMap or from compatible map services configured in the app. These requests are necessary to correctly display the map on the device.</p>
+          <div class="note-box">OpenStreetMap provides collaborative map data. For this reason, some information shown on the map, such as roads, places, boundaries, points of interest, or other geographic details, may not always be complete, accurate, or up to date.</div>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">5</span> Reverse geocoding with Nominatim/OpenStreetMap</h2>
+          <p>To show an address associated with geographic coordinates, GeoPin may send latitude and longitude to the Nominatim service, which uses OpenStreetMap data to return a readable address or geographic reference.</p>
+          <p>GeoPin uses this service only when the user requests the current position or saves a new point. After the request, the information obtained is stored locally on the user’s device. The app does not make continuous, automatic, or massive requests to the Nominatim service.</p>
+          <div class="note-box">The information returned by Nominatim/OpenStreetMap may not always be accurate, complete, or up to date. In some cases, the address, city, street, house number, postal code, or other geographic details may be approximate, missing, or may not exactly match the detected position. GeoPin displays this information as returned by the external service and cannot guarantee its absolute accuracy.</div>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">6</span> Legal basis</h2>
+          <p>The processing of location data is based on the user’s consent, expressed by granting location permission on the device. The user can revoke this permission at any time from the operating system settings.</p>
+          <p>The map display and reverse geocoding features are used to provide the functions requested by the user within the app, such as viewing saved pins and converting coordinates into a readable address.</p>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">7</span> Data retention</h2>
+          <p>Locations saved by the app are stored on the user’s device until they are manually deleted or the app is uninstalled, unless otherwise expressly stated within the app.</p>
+          <p>GeoPin does not store saved locations on its own servers. Data associated with pins, such as coordinates, address, labels, or notes, remains stored locally on the user’s device.</p>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">8</span> Data disclosure</h2>
+          <p>When the reverse geocoding feature is used, the location coordinates required for the request may be sent to the Nominatim/OpenStreetMap service solely to obtain the corresponding address or nearest geographic reference.</p>
+          <p>When the map is displayed, the device may make requests to OpenStreetMap servers or compatible map services to download the map tiles required for displaying the map.</p>
+          <p>GeoPin does not send to Nominatim any notes, personal labels, or other content manually entered by the user, unless a different feature is expressly indicated in the app.</p>
+          <div class="note-box">GeoPin does not use this data for advertising or profiling purposes.</div>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">9</span> User rights</h2>
+          <p>The user may at any time:</p>
+          <ul>
+            <li>deny or revoke location access permission;</li>
+            <li>delete locations saved in the app;</li>
+            <li>manage or remove locally stored data through the app’s available functions or through the device settings;</li>
+            <li>request information about the processing of data, where applicable.</li>
+          </ul>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">10</span> Safety notice and use while driving</h2>
+          <p>GeoPin is designed to help users save and find locations, but it must not be used by the driver while driving or in any situation where using the device may cause distraction, danger, or a violation of applicable laws.</p>
+          <p>Users are responsible for using the app safely, carefully, and in compliance with the local laws of the country or geographic area where they are located. The app should only be used when it is safe to do so, for example when the vehicle is stopped and in compliance with applicable rules.</p>
+          <p>Any improper, dangerous, or unlawful use of the app, including use while driving or in unsafe conditions, is the user’s responsibility.</p>
+          <div class="note-box">Location information, addresses, and map data shown by GeoPin may be approximate, incomplete, or not up to date. The app must not be used as the sole tool for driving, navigation, emergency, or safety decisions.</div>
+        </section>
+
+        <section class="section">
+          <h2><span class="number">11</span> Changes to this policy</h2>
+          <p>This policy may be updated over time to reflect changes to the app, new features, technical adjustments, or regulatory changes.</p>
+          <p>In the case of minor changes, the new version of this policy will be made available by updating this page, with the last updated date indicated.</p>
+          <p>In the case of significant changes affecting the processing of personal data, such as the introduction of new categories of collected data, new purposes of use, or new disclosures to external services, GeoPin may inform the user through a visible notice inside the app or through the information available on the app store page.</p>
+        </section>
+      </div>
+
+      <footer class="privacy-footer">© 2026 GeoPin - Privacy Policy</footer>
+    </article>
+  </main>
+</body>
+</html>
